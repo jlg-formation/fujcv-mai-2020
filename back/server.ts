@@ -1,8 +1,10 @@
 import express from "express";
 import serveIndex from "serve-index";
+import { ws } from "./ws";
 
-// titi toto
 const app = express();
+
+app.use('/ws', ws);
 
 app.use((req, res, next) => {
   console.log("on a recu un appel");
