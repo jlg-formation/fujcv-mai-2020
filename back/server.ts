@@ -1,5 +1,5 @@
-const express = require("express");
-const serveIndex = require("serve-index");
+import express from "express";
+import serveIndex from "serve-index";
 
 // titi toto
 const app = express();
