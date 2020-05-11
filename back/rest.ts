@@ -3,13 +3,16 @@ import mongoose, { Schema } from "mongoose";
 
 const Article = mongoose.model(
   "Article",
-  new Schema({
-    name: { type: String, required: true },
-    prix: Number,
-  }, {
-    collection: 'articles',
-    strict: true
-  })
+  new Schema(
+    {
+      name: { type: String, required: true },
+      prix: Number,
+    },
+    {
+      collection: "articles",
+      strict: true,
+    }
+  )
 );
 
 const app = express.Router();
@@ -25,8 +28,13 @@ const articles = [
 
 const obj = { id: 4 };
 
-app.get("/articles", (req, res) => {
-  res.json(articles);
+app.get("/articles", async (req, res) => {
+  try {
+    const articles = await Article.find({});
+    res.json(articles);
+  } catch (error) {
+    res.status(500).end();
+  }
 });
 
 app.get("/articles/:myNiceId", (req, res) => {
