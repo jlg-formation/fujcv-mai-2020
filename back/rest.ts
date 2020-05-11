@@ -1,9 +1,13 @@
 import express from "express";
+import mongoose, { Schema } from "mongoose";
 
-interface Article {
-  name: string;
-  prix: number;
-}
+const Article = mongoose.model(
+  "Article",
+  new Schema({
+    name: String,
+    prix: Number,
+  })
+);
 
 const app = express.Router();
 
@@ -33,9 +37,9 @@ app.get("/articles/:myNiceId", (req, res) => {
 
 app.post("/articles", async (req, res) => {
   try {
-    // const article = req.body as Article;
-    // const result = await db.collection<Article>("articles").insertOne(article);
-    // res.status(201).json(result.ops[0]);
+    const article = new Article(req.body);
+    const result = await article.save();
+    res.status(201).json(result);
   } catch (err) {
     console.error("err: ", err);
     res.status(500).end();
