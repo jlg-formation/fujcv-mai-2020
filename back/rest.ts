@@ -68,9 +68,14 @@ app.post("/articles", async (req, res) => {
   }
 });
 
-app.delete("/articles", (req, res) => {
-  articles.length = 0;
-  res.status(204).end();
+app.delete("/articles", async (req, res) => {
+  try {
+    await Article.deleteMany({});
+    res.status(204).end();
+  } catch (error) {
+    console.log('error: ', error);
+    res.status(500).end();
+  }
 });
 
 app.delete("/articles/:id", (req, res) => {
