@@ -78,14 +78,17 @@ app.delete("/articles", async (req, res) => {
   }
 });
 
-app.delete("/articles/:id", (req, res) => {
-  const id = +req.params.id;
-  const index = articles.findIndex((a) => a.id === id);
-  if (index === -1) {
-    return res.status(404).end();
+app.delete("/articles/:id", async (req, res) => {
+  const id = req.params.id;
+  if (!mongoose.isValidObjectId(id)) {
+    return res.status(400).json({ msg: "id not well formatted" });
   }
-  articles.splice(index, 1);
-  res.status(204).end();
+  try {
+    await Article.findByIdAndDelete(id);
+    res.status(204).end();
+  } catch (error) {
+    res.status(500).end();
+  }
 });
 
 app.put("/articles/:id", (req, res) => {
