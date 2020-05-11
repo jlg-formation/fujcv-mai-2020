@@ -73,7 +73,7 @@ app.delete("/articles", async (req, res) => {
     await Article.deleteMany({});
     res.status(204).end();
   } catch (error) {
-    console.log('error: ', error);
+    console.log("error: ", error);
     res.status(500).end();
   }
 });
@@ -91,34 +91,34 @@ app.delete("/articles/:id", async (req, res) => {
   }
 });
 
-app.put("/articles/:id", (req, res) => {
-  // /TODO: if (!check(req.body) ) {
-  //   return res.status(400).end();
-  // }
-  const id = +req.params.id;
-  const index = articles.findIndex((a) => a.id === id);
-  if (index === -1) {
-    return res.status(404).end();
+app.put("/articles/:id", async (req, res) => {
+  const id = req.params.id;
+  if (!mongoose.isValidObjectId(id)) {
+    return res.status(400).json({ msg: "id not well formatted" });
   }
-  const article = { id, ...req.body };
-  articles.splice(index, 1, article);
-  res.status(204).end();
+  try {
+    const article = await Article.findById(id);
+    if (article === null) {
+      return res.status(404).end();
+    }
+    await article.replaceOne(req.body);
+    res.status(204).end();
+  } catch (error) {
+    res.status(500).end();
+  }
 });
 
-app.patch("/articles/:id", (req, res) => {
-  // /TODO: if (!check(req.body) ) {
-  //   return res.status(400).end();
-  // }
-  const id = +req.params.id;
-  const article = articles.find((a) => a.id === id);
-  if (!article) {
-    return res.status(404).end();
+app.patch("/articles/:id", async (req, res) => {
+  const id = req.params.id;
+  if (!mongoose.isValidObjectId(id)) {
+    return res.status(400).json({ msg: "id not well formatted" });
   }
-  Object.keys(req.body).forEach((prop) => {
-    article[prop] = req.body[prop];
-  });
-
-  res.status(204).end();
+  try {
+    await Article.findByIdAndUpdate(id, req.body);
+    res.status(204).end();
+  } catch (error) {
+    res.status(500).end();
+  }
 });
 
 export const rest = app;
