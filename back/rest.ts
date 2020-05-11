@@ -1,6 +1,11 @@
 import express from "express";
 import { Db } from "mongodb";
 
+interface Article {
+  name: string;
+  prix: number;
+}
+
 export const rest = function (db: Db) {
   const app = express.Router();
 
@@ -28,12 +33,15 @@ export const rest = function (db: Db) {
     res.json(articles[i]);
   });
 
-  app.post("/articles", (req, res) => {
-    const article = req.body;
-    article.id = obj.id;
-    obj.id++;
-    articles.push(article);
-    res.status(201).json(article);
+  app.post("/articles", async (req, res) => {
+    try {
+      const article = req.body as Article;
+      const result = await db.collection<Article>('articles').insertOne(article);
+      res.status(201).json(result.ops[0]);
+    } catch (err) {
+      console.error('err: ', err);
+      res.status(500).end();
+    }
   });
 
   app.delete("/articles", (req, res) => {
