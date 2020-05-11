@@ -7,6 +7,7 @@ const Article = mongoose.model(
     {
       name: { type: String, required: true },
       prix: Number,
+      nature: String,
     },
     {
       collection: "articles",
@@ -18,15 +19,6 @@ const Article = mongoose.model(
 const app = express.Router();
 
 app.use(express.json());
-
-const articles = [
-  { id: 0, name: "paire de chaussette", prix: "32" },
-  { id: 1, name: "paire de chaussure", prix: "310" },
-  { id: 2, name: "masque", prix: "10" },
-  { id: 3, name: "slip", prix: "5" },
-];
-
-const obj = { id: 4 };
 
 app.get("/articles", async (req, res) => {
   try {
@@ -115,6 +107,15 @@ app.patch("/articles/:id", async (req, res) => {
   }
   try {
     await Article.findByIdAndUpdate(id, req.body);
+    res.status(204).end();
+  } catch (error) {
+    res.status(500).end();
+  }
+});
+
+app.patch("/articles", async (req, res) => {
+  try {
+    await Article.updateMany({}, req.body);
     res.status(204).end();
   } catch (error) {
     res.status(500).end();
