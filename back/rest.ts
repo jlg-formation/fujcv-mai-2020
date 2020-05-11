@@ -4,8 +4,11 @@ import mongoose, { Schema } from "mongoose";
 const Article = mongoose.model(
   "Article",
   new Schema({
-    name: String,
+    name: { type: String, required: true },
     prix: Number,
+  }, {
+    collection: 'articles',
+    strict: true
   })
 );
 
@@ -38,6 +41,10 @@ app.get("/articles/:myNiceId", (req, res) => {
 app.post("/articles", async (req, res) => {
   try {
     const article = new Article(req.body);
+    const check = article.validateSync();
+    if (check) {
+      return res.status(400).json(check);
+    }
     const result = await article.save();
     res.status(201).json(result);
   } catch (err) {
