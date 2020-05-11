@@ -37,13 +37,20 @@ app.get("/articles", async (req, res) => {
   }
 });
 
-app.get("/articles/:myNiceId", (req, res) => {
-  const i = req.params.myNiceId;
-  if (articles[i] === undefined) {
-    res.status(404).end();
-    return;
+app.get("/articles/:myNiceId", async (req, res) => {
+  const id = req.params.myNiceId;
+  if (!mongoose.isValidObjectId(id)) {
+    return res.status(400).json({ msg: "id not well formatted" });
   }
-  res.json(articles[i]);
+  try {
+    const article = await Article.findById(id);
+    if (article === null) {
+      return res.status(404).end();
+    }
+    res.json(article);
+  } catch (error) {
+    res.status(500).end();
+  }
 });
 
 app.post("/articles", async (req, res) => {
