@@ -1,3 +1,5 @@
-h1 {
-  color: green;
+:host {
+  display: flex;
+  flex-flow: column;
+  min-height: 100vh;
 }
