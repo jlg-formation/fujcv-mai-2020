@@ -1,1 +1,11 @@
-<p>articles works!</p>
+<h1>Liste des articles</h1>
+
+<div class="table">
+  <div class="header"></div>
+  <div class="body">
+    <div *ngFor="let article of articles" class="row">
+      <div class="cell">{{ article.name }}</div>
+      <div class="cell">{{ article.price }}</div>
+    </div>
+  </div>
+</div>
