@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ArticleService } from 'src/app/services/article.service';
+import { Article } from 'src/app/interfaces/article';
 
 @Component({
   selector: 'app-articles',
@@ -6,11 +8,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./articles.component.scss'],
 })
 export class ArticlesComponent implements OnInit {
-  articles = [
-    { name: 'tournevis', price: 12.34 },
-    { name: 'marteau', price: 32.34 },
-  ];
-  constructor() {}
+  articles: Article[];
+  constructor(private articleService: ArticleService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.articles = this.articleService.getArticles();
+  }
 }
