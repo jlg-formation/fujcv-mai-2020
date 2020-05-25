@@ -26,11 +26,11 @@ export class NewArticleComponent implements OnInit {
       this.router.navigateByUrl('/articles');
     } catch (err) {
       if (err.error.code === 11000) {
-        this.error = "Oops... le nom de cet article existe deja.";
+        this.error = 'Oops... le nom de cet article existe deja.';
         return;
       }
       if (err.status === 500) {
-        this.error = "Oops... problème technique côté serveur."
+        this.error = 'Oops... problème technique côté serveur.';
         return;
       }
       this.error = 'Article impossible à créer.';

@@ -12,4 +12,8 @@ export class ArticlesComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  select(event: MouseEvent) {
+    console.log('select', event);
+  }
 }

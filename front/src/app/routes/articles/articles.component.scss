@@ -1,0 +1,39 @@
+:host {
+  display: flex;
+  width: 100%;
+  flex-flow: column;
+  align-items: center;
+}
+
+.header {
+  font-weight: bold;
+  background: #ccc;
+}
+
+button {
+  margin: 1em;
+}
+
+.row {
+  display: flex;
+  padding: 0.5em;
+
+  .name {
+    width: 10em;
+  }
+  .price {
+    width: 5em;
+  }
+
+  &:nth-child(even) {
+    background: #eee;
+  }
+
+  &:hover:not(.header) {
+    background: #ddd;
+  }
+
+  &.selected:not(.header) {
+    background: hsl(240, 100%, 80%);
+  }
+}
