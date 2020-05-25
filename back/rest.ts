@@ -5,7 +5,7 @@ const Article = mongoose.model(
   "Article",
   new Schema(
     {
-      name: { type: String, required: true },
+      name: { type: String, required: true, unique: true },
       price: Number,
       nature: String,
     },
@@ -60,6 +60,9 @@ app.post("/articles", async (req, res) => {
     const result = await article.save();
     res.status(201).json(result);
   } catch (err) {
+    if ([11000, 11002].includes(err.code)) {
+      return res.status(400).json(err);
+    }
     console.error("err: ", err);
     res.status(500).end();
   }

@@ -6,20 +6,34 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class ArticleService {
-
   articles = this.http.get<Article[]>('http://localhost:3000/ws/rest/articles');
 
   constructor(private http: HttpClient) {}
 
-  create(article: Article) {
-    this.http.post('http://localhost:3000/ws/rest/articles', article).subscribe({
-      next: (article) => {
-        console.log('article: ', article);
-      },
-      error: (err) => {
-        console.log('err: ', err);
-      }
-    });
-  }
+  // async create(article: Article): Promise<void> {
+  //   const result = await this.http
+  //     .post<Article>('http://localhost:3000/ws/rest/articles', article)
+  //     .toPromise().catch((err) => {
+  //       console.log('err: ', err);
+  //       throw err;
+  //     });
+  //   console.log('result: ', result);
+  // }
 
+  async create(article: Article): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.http
+      .post<Article>('http://localhost:3000/ws/rest/articles', article).subscribe({
+        next: (result) => {
+          console.log('result: ', result);
+          resolve();
+        },
+        error: (err) => {
+          console.log('err: ', err);
+          reject(err);
+        }
+      });
+    });
+
+  }
 }
