@@ -20,6 +20,11 @@ const app = express.Router();
 
 app.use(express.json());
 
+// A enlever... juste pour simuler de la lenteur.
+app.use((req, res, next) => {
+  setTimeout(next, 2000);
+});
+
 app.get("/articles", async (req, res) => {
   try {
     const articles = await Article.find({});
