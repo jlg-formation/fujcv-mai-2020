@@ -7,7 +7,7 @@
     <div class="cell price">Prix</div>
   </div>
   <div class="body">
-    <div *ngFor="let article of articleService.articles | async" class="row" (click)="select($event)">
+    <div *ngFor="let article of articleService.articles | async" class="row" (click)="select($event)" [id]="article._id">
       <div class="cell name">{{ article.name }}</div>
       <div class="cell price">{{ article.price }}</div>
     </div>
