@@ -57,6 +57,10 @@ export class ArticlesComponent implements OnInit {
       for (let id of this.selectedList) {
         console.log('id: ', id);
         await this.articleService.delete(id);
+        this.selectedList.splice(
+          this.selectedList.findIndex((item) => item === id),
+          1
+        );
       }
       await this.refresh();
     } catch (e) {
