@@ -1,5 +1,5 @@
 <h1>Creation d'article</h1>
-<form [formGroup]="f">
+<form [formGroup]="f" (ngSubmit)="submit()">
   <label>
     <div>Nom de l'article</div>
     <input type="text" formControlName="name">

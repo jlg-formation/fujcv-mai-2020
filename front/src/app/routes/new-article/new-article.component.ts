@@ -14,4 +14,8 @@ export class NewArticleComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
+
+  submit() {
+    console.log('submit');
+  }
 }
