@@ -6,9 +6,8 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class ArticleService {
+  articles = this.http.get<Article[]>('http://localhost:3000/ws/rest/articles');
+
   constructor(private http: HttpClient) {}
 
-  async getArticles(): Promise<Article[]> {
-    return await this.http.get<Article[]>('http://localhost:3000/ws/rest/articles').toPromise();
-  }
 }

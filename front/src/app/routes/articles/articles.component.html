@@ -3,7 +3,7 @@
 <div class="table">
   <div class="header"></div>
   <div class="body">
-    <div *ngFor="let article of articles" class="row">
+    <div *ngFor="let article of articleService.articles | async" class="row">
       <div class="cell">{{ article.name }}</div>
       <div class="cell">{{ article.price }}</div>
     </div>
