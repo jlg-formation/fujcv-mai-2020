@@ -32,4 +32,8 @@ export class ArticlesComponent implements OnInit {
     cl.add('selected');
     console.log('this.selectedList: ', this.selectedList);
   }
+
+  delete() {
+    console.log('delete');
+  }
 }
