@@ -2,6 +2,10 @@
 
 @import "../node_modules/normalize.css/normalize.css";
 
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
 a {
   color: inherit;
   text-decoration: inherit;

@@ -8,13 +8,15 @@ import { HomeComponent } from './routes/home/home.component';
 import { LegalComponent } from './routes/legal/legal.component';
 import { ArticlesComponent } from './routes/articles/articles.component';
 import { HttpClientModule } from '@angular/common/http';
+import { NewArticleComponent } from './routes/new-article/new-article.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     LegalComponent,
-    ArticlesComponent
+    ArticlesComponent,
+    NewArticleComponent
   ],
   imports: [
     BrowserModule,
