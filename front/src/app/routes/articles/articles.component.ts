@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ArticleService } from 'src/app/services/article.service';
+import { BehaviorSubject } from 'rxjs';
+import { Article } from 'src/app/interfaces/article';
 
 @Component({
   selector: 'app-articles',
@@ -8,9 +10,25 @@ import { ArticleService } from 'src/app/services/article.service';
 })
 export class ArticlesComponent implements OnInit {
   selectedList: string[] = [];
+  articles$ = new BehaviorSubject<Article[]>([]);
+  error = '';
   constructor(public articleService: ArticleService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.refresh();
+  }
+
+  async refresh() {
+    try {
+      const articles = await this.articleService.retrieveAll();
+      if (articles.length > 3) {
+        throw new Error();
+      }
+      this.articles$.next(articles);
+    } catch (err) {
+      this.error = 'oops ... erreur lors du refresh';
+    }
+  }
 
   select(event: MouseEvent) {
     console.log('select', event);
@@ -33,7 +51,16 @@ export class ArticlesComponent implements OnInit {
     console.log('this.selectedList: ', this.selectedList);
   }
 
-  delete() {
-    console.log('delete');
+  async delete() {
+    try {
+      console.log('delete');
+      for (let id of this.selectedList) {
+        console.log('id: ', id);
+        await this.articleService.delete(id);
+      }
+      await this.refresh();
+    } catch (e) {
+      console.log('e: ', e);
+    }
   }
 }

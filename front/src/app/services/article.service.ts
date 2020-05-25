@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class ArticleService {
+
   articles = this.http.get<Article[]>('http://localhost:3000/ws/rest/articles');
 
   constructor(private http: HttpClient) {}
@@ -35,5 +36,25 @@ export class ArticleService {
       });
     });
 
+  }
+
+  async delete(id: string): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.http
+      .delete<void>(`http://localhost:3000/ws/rest/articles/${id}`).subscribe({
+        next: (result) => {
+          console.log('result: ', result);
+          resolve();
+        },
+        error: (err) => {
+          console.log('err: ', err);
+          reject(err);
+        }
+      });
+    });
+  }
+
+  async retrieveAll(): Promise<Article[]> {
+    return await this.http.get<Article[]>('http://localhost:3000/ws/rest/articles').toPromise();
   }
 }
