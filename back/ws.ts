@@ -1,10 +1,13 @@
 import express from "express";
 import moment from "moment";
+import cors from "cors";
 import { rest } from "./rest";
 
 moment.locale("fr");
 
 const app = express.Router();
+
+app.use(cors());
 
 app.use("/rest", rest);
 

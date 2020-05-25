@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Article } from '../interfaces/article';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ArticleService {
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
-  getArticles(): Article[] {
-    return [{ name: '100 Clous 10mm', price: 23.2 }];
+  async getArticles(): Promise<Article[]> {
+    return await this.http.get<Article[]>('http://localhost:3000/ws/rest/articles').toPromise();
   }
 }

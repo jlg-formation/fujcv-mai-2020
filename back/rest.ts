@@ -6,7 +6,7 @@ const Article = mongoose.model(
   new Schema(
     {
       name: { type: String, required: true },
-      prix: Number,
+      price: Number,
       nature: String,
     },
     {

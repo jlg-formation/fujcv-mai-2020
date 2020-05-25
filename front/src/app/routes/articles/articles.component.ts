@@ -12,6 +12,8 @@ export class ArticlesComponent implements OnInit {
   constructor(private articleService: ArticleService) {}
 
   ngOnInit(): void {
-    this.articles = this.articleService.getArticles();
+    (async () => {
+      this.articles = await this.articleService.getArticles();
+    })();
   }
 }
